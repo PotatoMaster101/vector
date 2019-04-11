@@ -9,8 +9,8 @@
 #include "vector.h"
 #define DEF_MAX 10
 
-static _Bool vec_fix(vec *v);
-static inline _Bool vec_check(vec *v);
+static _Bool vec_fix(vec_t *v);
+static inline _Bool vec_check(vec_t *v);
 static void *vec_new_elem(const void *d, size_t n);
 
 // Initialises the specified vector. 
@@ -20,7 +20,7 @@ static void *vec_new_elem(const void *d, size_t n);
 //
 // RET: 
 // Zero on success, non-zero on error. 
-int vec_init(vec *v) {
+int vec_init(vec_t *v) {
     if (v == NULL)
         return VEC_NULL_ERR;
 
@@ -41,7 +41,7 @@ int vec_init(vec *v) {
 //
 // RET: 
 // Zero on success, non-zero on error. 
-int vec_sort(vec *v, int (*cmp)(const void *, const void *)) {
+int vec_sort(vec_t *v, int (*cmp)(const void *, const void *)) {
     if (!vec_check(v) || cmp == NULL)
         return VEC_NULL_ERR;
     if (v->len != 0)
@@ -59,7 +59,7 @@ int vec_sort(vec *v, int (*cmp)(const void *, const void *)) {
 //
 // RET: 
 // Zero on success, non-zero on error. 
-int vec_add(vec *v, const void *d, size_t n) {
+int vec_add(vec_t *v, const void *d, size_t n) {
     if (!vec_check(v))
         return VEC_NULL_ERR;
     if (!vec_fix(v))
@@ -85,7 +85,7 @@ int vec_add(vec *v, const void *d, size_t n) {
 //
 // RET: 
 // Zero on success, non-zero on error. 
-int vec_ins(vec *v, const void *d, size_t n, size_t i) {
+int vec_ins(vec_t *v, const void *d, size_t n, size_t i) {
     if (!vec_check(v))
         return VEC_NULL_ERR;
     if (i >= v->len)
@@ -113,7 +113,7 @@ int vec_ins(vec *v, const void *d, size_t n, size_t i) {
 //
 // RET: 
 // The deleted element, or NULL on error. 
-void *vec_del(vec *v, size_t i) {
+void *vec_del(vec_t *v, size_t i) {
     if (!vec_check(v))
         return NULL;
 
@@ -135,7 +135,7 @@ void *vec_del(vec *v, size_t i) {
 // v - the vector to delete the elements
 // i - the starting index to delete
 // n - the number of elements to delete
-void vec_delrange(vec *v, size_t i, size_t n) {
+void vec_delrange(vec_t *v, size_t i, size_t n) {
     if (!vec_check(v) || n == 0)
         return;
 
@@ -155,7 +155,7 @@ void vec_delrange(vec *v, size_t i, size_t n) {
 //
 // PARAMS: 
 // v - the vector to reverse. 
-void vec_reverse(vec *v) {
+void vec_reverse(vec_t *v) {
     if (vec_check(v)) {
         for (size_t i = 0; i < (v->len / 2); i++) {
             void *swap = v->data[i];
@@ -169,7 +169,7 @@ void vec_reverse(vec *v) {
 //
 // PARAMS: 
 // v - the vector to clear
-void vec_clear(vec *v) {
+void vec_clear(vec_t *v) {
     if (vec_check(v)) {
         for (size_t i = 0; i < v->len; i++)
             free(v->data[i]);
@@ -181,7 +181,7 @@ void vec_clear(vec *v) {
 //
 // PARAMS: 
 // v - the vector to free
-void vec_free(vec *v) {
+void vec_free(vec_t *v) {
     if (vec_check(v)) {
         for (size_t i = 0; i < v->len; i++)
             free(v->data[i]);
@@ -198,7 +198,7 @@ void vec_free(vec *v) {
 // RET: 
 // True if the vector has enough storage for one more element, false 
 // otherwise. 
-static _Bool vec_fix(vec *v) {
+static _Bool vec_fix(vec_t *v) {
     if (v->len < v->max)
         return true;    // space enough
 
@@ -219,7 +219,7 @@ static _Bool vec_fix(vec *v) {
 //
 // RET: 
 // True if the vector is in valid state, false otherwise. 
-static inline _Bool vec_check(vec *v) {
+static inline _Bool vec_check(vec_t *v) {
     return (v != NULL && v->data != NULL);
 }
 

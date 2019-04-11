@@ -17,12 +17,12 @@
 #define VEC_NULL_ERR 2
 #define VEC_RANGE_ERR 3
 
-// The vector type. 
-typedef struct vec_t {
+// The vector. 
+typedef struct vector_t {
     void **data;            // internal data
     size_t len;             // current length
     size_t max;             // maximum length
-} vec;
+} vec_t;
 
 // Initialises the specified vector. 
 //
@@ -31,7 +31,7 @@ typedef struct vec_t {
 //
 // RET: 
 // Zero on success, non-zero on error. 
-int vec_init(vec *v);
+int vec_init(vec_t *v);
 
 // Sorts the specified vector using the comparison function. 
 //
@@ -41,7 +41,7 @@ int vec_init(vec *v);
 //
 // RET: 
 // Zero on success, non-zero on error. 
-int vec_sort(vec *v, int (*cmp)(const void *, const void *));
+int vec_sort(vec_t *v, int (*cmp)(const void *, const void *));
 
 // Adds a new element into the specified vector. The new element will be 
 // copied. 
@@ -53,7 +53,7 @@ int vec_sort(vec *v, int (*cmp)(const void *, const void *));
 //
 // RET: 
 // Zero on success, non-zero on error. 
-int vec_add(vec *v, const void *d, size_t n);
+int vec_add(vec_t *v, const void *d, size_t n);
 
 // Inserts a new element into the specified vector. The new element will be 
 // copied. 
@@ -66,7 +66,7 @@ int vec_add(vec *v, const void *d, size_t n);
 //
 // RET: 
 // Zero on success, non-zero on error. 
-int vec_ins(vec *v, const void *d, size_t n, size_t i);
+int vec_ins(vec_t *v, const void *d, size_t n, size_t i);
 
 // Deletes an element in the vector specified by the index. 
 //
@@ -76,7 +76,7 @@ int vec_ins(vec *v, const void *d, size_t n, size_t i);
 //
 // RET: 
 // The deleted element, or NULL on error. 
-void *vec_del(vec *v, size_t i);
+void *vec_del(vec_t *v, size_t i);
 
 // Deletes a range of elements in the specified vector. 
 //
@@ -84,25 +84,25 @@ void *vec_del(vec *v, size_t i);
 // v - the vector to delete the elements
 // i - the starting index to delete
 // n - the number of elements to delete
-void vec_delrange(vec *v, size_t i, size_t n);
+void vec_delrange(vec_t *v, size_t i, size_t n);
 
 // Reverts every element in the vector. 
 //
 // PARAMS: 
 // v - the vector to reverse. 
-void vec_reverse(vec *v);
+void vec_reverse(vec_t *v);
 
 // Clears the specified vector, freeing all elements. 
 //
 // PARAMS: 
 // v - the vector to clear
-void vec_clear(vec *v);
+void vec_clear(vec_t *v);
 
 // Frees the internal buffer in the specified vector. 
 //
 // PARAMS: 
 // v - the vector to free
-void vec_free(vec *v);
+void vec_free(vec_t *v);
 
 #endif
 
