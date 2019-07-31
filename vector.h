@@ -33,6 +33,17 @@ typedef struct vector_t {
 // Zero on success, non-zero on error. 
 int vec_init(vec_t *v);
 
+
+// Reserves n elements in the specified vector. 
+//
+// PARAMS: 
+// v - the vector to reserve
+// n - number of elements
+//
+// RET: 
+// Zero on success, non-zero on error. 
+int vec_reserve(vec_t *v, size_t n);
+
 // Sorts the specified vector using the comparison function. 
 //
 // PARAMS: 

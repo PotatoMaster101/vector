@@ -33,6 +33,30 @@ int vec_init(vec_t *v) {
     return ret;
 }
 
+// Reserves n elements in the specified vector. 
+//
+// PARAMS: 
+// v - the vector to reserve
+// n - number of elements
+//
+// RET: 
+// Zero on success, non-zero on error. 
+int vec_reserve(vec_t *v, size_t n) {
+    if (v == NULL)
+        return VEC_NULL_ERR;
+    if (n <= v->max)
+        return VEC_RANGE_ERR;
+
+    int ret = VEC_ALLOC_ERR;
+    void **res = realloc(v->data, n * v->max * (sizeof *res));
+    if (res != NULL) {
+        ret = VEC_GOOD;
+        v->max = n;
+        v->data = res;
+    }
+    return ret;
+}
+
 // Sorts the specified vector using the comparison function. 
 //
 // PARAMS: 
@@ -202,6 +226,7 @@ static _Bool vec_fix(vec_t *v) {
     if (v->len < v->max)
         return true;    // space enough
 
+    printf("fixing...\n");
     _Bool ret = false;
     void **temp = realloc(v->data, 2 * v->max * (sizeof *temp));
     if (temp != NULL) {
