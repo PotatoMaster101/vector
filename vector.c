@@ -226,7 +226,6 @@ static _Bool vec_fix(vec_t *v) {
     if (v->len < v->max)
         return true;    // space enough
 
-    printf("fixing...\n");
     _Bool ret = false;
     void **temp = realloc(v->data, 2 * v->max * (sizeof *temp));
     if (temp != NULL) {
